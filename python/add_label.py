@@ -31,7 +31,7 @@ class AddLabel(BasicTransformer):
                 # Generate the new label to add
                 new_label = PairNode(
                     SyntaxToken(value='group_label', prefix='', suffix=''),
-                    SyntaxToken(value=label_name, prefix='', suffix='\n      ')
+                    SyntaxToken(value=label_name, prefix='', suffix='\n    ')
                 )
 
                 # Not actually the new items yet, creating a list of the orig items
@@ -77,7 +77,6 @@ while stop_trigger.lower() != 'no':
         if folder[0] != '.' and folder.split('.')[-1] not in ['lkml']:
 
             for filename in os.listdir(os.path.join(lookml_base, folder)):
-                print(filename)
 
                 # ignore any files beginning with a period, and any python or jupyter notebooks files (py or ipynb)
                 if filename[0] != '.' and filename.split('.')[-1] not in ['py', 'ipynb', 'tmp', '__pycache__']:
