@@ -48,7 +48,10 @@ class AddLabel(BasicTransformer):
                 return new_node
 
             else:
-                return self._visit_container(node)
+                try:
+                    return self._visit_container(node)
+                except:
+                    return node
 
 print('''
 
