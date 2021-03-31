@@ -87,7 +87,7 @@ lookml_base = os.path.normcase(input('Paste your project folder path and press E
 stop_trigger = ''
 
 # Main loop, user can continue searching through with new terms/labels if they'd like
-while stop_trigger.lower() != 'no':
+while stop_trigger.lower() not in ['n' 'no']:
     field_search = input('What search terms are you looking for? Please separate multiple values with commas:  ')
     print('')
     label_name=input('What would you like the new label name to be?:  ')
@@ -118,10 +118,10 @@ while stop_trigger.lower() != 'no':
                     # Add new labels
                     new_tree = tree.accept(AddLabel(field_search=field_search, overwrite_override=overwrite_override))
 
-                    # Create new file
-                    new_filename = generate_new_filename(lookml_path, '_label_added')
-                    new_path = os.path.join(lookml_base, folder, new_filename)
-                    with open(new_path, 'w+') as new_file:
+                    # # Create new file
+                    # new_filename = generate_new_filename(lookml_path, '_label_added')
+                    # new_path = os.path.join(lookml_base, folder, new_filename)
+                    with open(lookml_path, 'w+') as new_file:
                         new_file.write(str(new_tree))
 
     # Done with this task, now we'll see if the user wants to keep going
