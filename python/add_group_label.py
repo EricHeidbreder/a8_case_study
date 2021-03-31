@@ -87,7 +87,7 @@ lookml_base = os.path.normcase(input('Paste your project folder path and press E
 stop_trigger = ''
 
 # Main loop, user can continue searching through with new terms/labels if they'd like
-while stop_trigger.lower() not in ['n' 'no']:
+while stop_trigger.lower() not in ['n', 'no']:
     field_search = input('What search terms are you looking for? Please separate multiple values with commas:  ')
     print('')
     label_name=input('What would you like the new label name to be?:  ')
