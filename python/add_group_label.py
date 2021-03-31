@@ -92,7 +92,7 @@ while stop_trigger.lower() != 'no':
     print('')
     label_name=input('What would you like the new label name to be?:  ')
     print('')
-    overwrite_override = input('''Would you like to turn of overwrite confirmation? This will overwrite all group_labels in fields that match your query. (Y/N):  ''')
+    overwrite_override = input('''Would you like to turn off overwrite confirmation? This will overwrite all group_labels in fields that match your query. (Y/N):  ''')
     if overwrite_override.lower() in ['n', 'no']:
         overwrite_override = False
     else:
@@ -131,8 +131,8 @@ while stop_trigger.lower() != 'no':
     Finished generating new labels
     ##########################################################
     
-    Would you like to keep going? Type "no" and press enter no
-    to stop the script.
+    Would you like to add another group label with a different
+    search query? (Y/N)
 
     Enter your response: ''')
                     
