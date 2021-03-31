@@ -21,21 +21,36 @@ from funcs import (
 import os
 
 class AddLabel(BasicTransformer):
-        def __init__(self, field_search):
+        def __init__(self, field_search, overwrite_confirmation=True, overwrite_override=False):
             # Create a properly formatted list from messy user input
             self.field_search = field_search.replace(' ', '').split(',')
+            self.overwrite_confirmation = overwrite_confirmation
+            self.overwrite_override = overwrite_override
 
         def visit_block(self, node: BlockNode) -> BlockNode:
             # We want to know if any of the search terms are present       
-            if any(search_term.lower() in node.name.value for search_term in self.field_search):
+            if node.type.value not in ['view', 'explore'] and any(search_term.lower() in node.name.value for search_term in self.field_search):
                 # Generate the new label to add
                 new_label = PairNode(
                     SyntaxToken(value='group_label', prefix='', suffix=''),
                     SyntaxToken(value=label_name, prefix='', suffix='\n    ')
                 )
 
-                # Not actually the new items yet, creating a list of the orig items
-                new_items = list(node.container.items)
+                if not self.overwrite_override:
+                    # We want to overwrite the group label, but should probably check to make sure it's okay first
+                    if self.overwrite_confirmation:
+                        overwrite = input(f'The field {node.name.value} already has a group_label parameter. Do you want to overwrite (Y/N):  ')
+                        if overwrite.lower() not in ['n', 'no']:
+                            new_items = list(item for item in node.container.items if item.type.value != 'group_label')
+                        else:
+                            try:
+                                return self._visit_container(node)
+                            except:
+                                return node
+
+                    # If we got here, it means overwrite_confirmation == False
+                    else:
+                        new_items = list(item for item in node.container.items if item.type.value != 'group_label')
 
                 # Now we insert the group label at the front
                 new_items.insert(0, new_label)
@@ -47,11 +62,16 @@ class AddLabel(BasicTransformer):
                 # rebuild the tree with the new node and continue
                 return new_node
 
+            # We didn't match the search terms
             else:
                 try:
                     return self._visit_container(node)
+                # nodes that have ListNodes of type = 'filters' in them seem to be throwing FrozenInstanceError messages, 
+                # but they still work and labels update if they match.
                 except:
                     return node
+                finally:
+                    pass
 
 print('''
 
