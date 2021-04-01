@@ -48,9 +48,9 @@ class AddLabel(BasicTransformer):
                             except:
                                 return node
 
-                    # If we got here, it means overwrite_confirmation == False
-                    else:
-                        new_items = list(item for item in node.container.items if item.type.value != 'group_label')
+                # If we got here, it means overwrite_confirmation == False or overwrite_override == True
+                
+                new_items = list(item for item in node.container.items if item.type.value != 'group_label')
 
                 # Now we insert the group label at the front
                 new_items.insert(0, new_label)
