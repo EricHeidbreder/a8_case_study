@@ -1,3 +1,4 @@
 .vscode/
-python/
+lookml_support/
 .venv/
+other_scripts/
