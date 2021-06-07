@@ -7,7 +7,7 @@ view: order_items {
     primary_key: yes
     type: number
     sql: ${TABLE}."ID" ;;
-    label: "A TEST LABEL" 
+    label: "THIS IS A NEW LABEL" 
   }
   dimension: inventory_item_id { type: number  sql: ${TABLE}."INVENTORY_ITEM_ID" ;; }
   dimension: order_id { type: number  sql: ${TABLE}."ORDER_ID" ;; }
